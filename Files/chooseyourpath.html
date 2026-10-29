@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset = "UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="chooseyourpath.css">
+    <title>Choose Your Path</title>
+</head>
+<body>
+    <h1>Choose Your Path</h1>
+    <p>Choose where to go:</p>
+    <ul>
+        <li><a href="index.html">Home</a></li> 
+    </ul>
+
+    <script>
+        function filterImages(category) {
+            const maps = document.querySelectorAll('.ImageRow a');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            maps.forEach(map => {
+                if (category === 'all' || map.dataset.category === category) {
+                    map.classList.remove('hide');
+                } else {
+                    map.classList.add('hide');
+                }
+            });
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+
+    <div class = "filter-buttons">
+        <button class = "button filter-btn active" onclick="filterImages('all')">
+            <span = class="button_top">All</span>
+        </button>
+        <button class = "button filter-btn" onclick="filterImages('Gmod')">
+            <span = class="button_top">Gmod</span>
+        </button>
+        <button class = "button filter-btn" onclick="filterImages('TF2')">
+            <span = class="button_top">TF2</span>
+        </button>
+    </div>
+
+    <div class = "ImageRow">
+            <a href="Construct.html" data-category="Gmod"><img src= "Gmconstruct.png" alt="A Picture of Grass" class = "Vertica-lImage"></a>
+            <a href="2fortbridge.html" data-category="TF2"><img src="2fortbridge.png" alt="A picture of 2 Fort Bridge" class = "Vertica-lImage"></a>
+            <a href="Badlands2.html" data-category="TF2"><img src="Badlands2.png" alt="A picture of Badlands 2" class = "Vertica-lImage"></a>
+            <a href="plborneo.html" data-category="TF2"><img src="borneo.png" alt="A picture of Borneo" class = "Vertica-lImage"></a>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+.Vertica-lImage {
+ width : 300px;
+ height : 500px ;
+ object-fit: cover;
+ flex-shrink: 0;
+}
+
+.ImageRow {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    justify-content: flex-start;
+    width: 100%;
+    padding-bottom: 15px;
+}
+
+.ImageRow a.hide {
+    display: none;
+}
+
+.filter-btn.active {
+    background-color: #555;
+    color: #fff;
+}
+
+button {
+  align-items: center;
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #ffffff;
+  display: inline-flex; /* Mudou de flex para inline-flex para abraçar o tamanho correto */
+  font-size: 16px;
+  justify-content: center;
+  padding: 2px; /* Controla a espessura da bordinha colorida */
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+button span {
+  background-color: rgb(5, 6, 45);
+  padding: 8px 16px; /* Ajusta o tamanho da parte preta */
+  border-radius: 6px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
+}
+
+button:hover span {
+  background: none;
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+.filter-buttons {
+    margin-bottom: 20px;
+}
