@@ -1,0 +1,11 @@
+.Vertica-lImage {
+ width : 300px;
+ height : 500px ;
+ object-fit: cover;
+}
+
+.ImageRow {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}

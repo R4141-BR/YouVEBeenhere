@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gm Construct 360°</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+
+    <style>
+        #panorama {
+            width: 70%;
+            height: 350px;
+        }
+        .controls {
+            text-align: center;
+            margin-top: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gm Construct</h1>
+    <div id="panorama"></div>
+
+    <div class="controls">
+        <button onclick="mudarCena('cena1')">Cena 1</button>
+        <button onclick="mudarCena('cena2')">Cena 2</button>
+        <button onclick="mudarCena('cena3')">Cena 3</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+    <script>
+        const viewer = pannellum.viewer('panorama',{
+            "default":{
+                "firstScene":"cena1",
+                "autoLoad": true,
+                "compass": true
+            },
+            "scenes": {
+                "cena1":{
+                    "type": "equirectangular",
+                    "panorama": "GmConstruct.jpg"
+                },
+                "cena2": {
+                    "type": "equirectangular",
+                    "panorama":"GmConstruct2.jpg"
+                },
+                "cena3":{
+                    "type":"equirectangular",
+                    "panorama":"GmConstruct4.jpg"
+                }
+            }
+        });
+        function mudarCena(idCena) {
+            viewer.loadScene(idCena);
+        }
+    </script>
+
+</body>
+</html>
