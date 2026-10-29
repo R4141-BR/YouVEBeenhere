@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borneo Quiz 360°</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+
+    <style>
+        body {
+            background-image: url('fundo2.png');
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0;
+            min-height: 100vh;
+            color: #ffffff;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { margin-top: 20px; }
+        #panorama {
+            width: 70%;
+            height: 350px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            background-color: #000;
+        }
+        .controls {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .nav-btn {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 5px;
+            background-color: #333;
+            color: white;
+            border: 1px solid #fff;
+            border-radius: 4px;
+        }
+        .nav-btn:hover { background-color: #555; }
+        
+        /* Quiz Styles */
+        .quiz-container {
+            width: 70%;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .options-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .option-btn {
+            background-color: #444;
+            color: #fff;
+            border: 2px solid #ffd700;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+            width: 45%;
+        }
+        .option-btn:hover { background-color: #ffd700; color: #000; }
+        #feedback {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            min-height: 25px;
+        }
+        
+        .home-link {
+            margin-top: 20px;
+            margin-bottom: 30px;
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="map-title">2Fort Knowledge Test</h1>
+    
+    <div id="panorama"></div>
+
+    <div class="controls">
+        <button class="nav-btn" onclick="mudarCena('cena1')">Question 1</button>
+        <button class="nav-btn" onclick="mudarCena('cena2')">Question 2</button>
+        <button class="nav-btn" onclick="mudarCena('cena3')">Question 3</button>
+        <button class="nav-btn" onclick="mudarCena('cena4')">Question 4</button>
+    </div>
+
+    <div class="quiz-container">
+        <h2 id="question-text">Loading question...</h2>
+        <div class="options-grid" id="options-container">
+            <!-- Options will be injected here via JavaScript -->
+        </div>
+        <div id="feedback"></div>
+    </div>
+
+    <a href="trivia_menu.html" class="home-link">Back to Menu</a>
+
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <script>
+        const viewer = pannellum.viewer('panorama',{
+            "default":{
+                "firstScene":"cena1",
+                "autoLoad": true,
+                "compass": true
+            },
+            "scenes": {
+                "cena1": { "type": "equirectangular", "panorama": "borneo1.jpg" },
+                "cena2": { "type": "equirectangular", "panorama": "borneo2.jpg" },
+                "cena3": { "type": "equirectangular", "panorama": "borneo3.jpg" },
+                "cena4": { "type": "equirectangular", "panorama": "borneo3.jpg" } 
+            }
+        });
+
+        // 2FORT QUIZ DATA
+        const quizData = {
+            'cena1': {
+                question: "2Fort is a remake of a map from which original game?",
+                options: [
+                    { text: "Half-Life Deathmatch", correct: false },
+                    { text: "Team Fortress Classic", correct: true },
+                    { text: "Quake 3 Arena", correct: false },
+                    { text: "Counter-Strike", correct: false }
+                ]
+            },
+            'cena2': {
+                question: "What iconic animal cutout is hidden in the background scenery out of bounds?",
+                options: [
+                    { text: "A wooden cow", correct: true },
+                    { text: "A cardboard sheep", correct: false },
+                    { text: "A metal dog", correct: false },
+                    { text: "A stuffed bear", correct: false }
+                ]
+            },
+            'cena3': {
+                question: "What major architectural change was made to the bridge compared to early beta versions?",
+                options: [
+                    { text: "It was widened", correct: false },
+                    { text: "Water was removed from underneath", correct: false },
+                    { text: "A roof was added", correct: true },
+                    { text: "A capture point was added", correct: false }
+                ]
+            },
+            'cena4': {
+                question: "Despite being a Capture the Flag map, what is 2Fort infamous for among players?",
+                options: [
+                    { text: "Matches ending too quickly", correct: false },
+                    { text: "Endless Deathmatch rounds where no one caps", correct: true },
+                    { text: "Being too small for 12v12", correct: false },
+                    { text: "Crashing the server", correct: false }
+                ]
+            }
+        };
+
+       // State variables to track progress
+        let currentScore = 0;
+        let answeredQuestions = [];
+
+        function mudarCena(idCena) {
+            viewer.loadScene(idCena);
+            loadQuestion(idCena);
+        }
+
+        function loadQuestion(idCena) {
+            const currentQuiz = quizData[idCena];
+            const questionElement = document.getElementById("question-text");
+            const feedbackElement = document.getElementById("feedback");
+            const optionsContainer = document.getElementById("options-container");
+
+            // If the user already finished the quiz, don't reload the questions
+            if (answeredQuestions.length === 4) {
+                return; 
+            }
+
+            questionElement.innerText = currentQuiz.question;
+            feedbackElement.innerText = ""; 
+            feedbackElement.style.color = "#fff";
+            optionsContainer.innerHTML = ""; 
+
+            // Check if this specific question was already answered
+            if (answeredQuestions.includes(idCena)) {
+                feedbackElement.innerText = "You already answered this question! Move to the next one.";
+                feedbackElement.style.color = "#ffd700";
+                return;
+            }
+
+            // Generate buttons
+            currentQuiz.options.forEach(option => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.innerText = option.text;
+                // Pass the current scene ID into the checkAnswer function
+                btn.onclick = () => checkAnswer(option.correct, idCena);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(isCorrect, idCena) {
+            const feedbackElement = document.getElementById("feedback");
+            
+            // Mark question as answered
+            answeredQuestions.push(idCena);
+
+            // Disable all option buttons so they can't be clicked again
+            const buttons = document.querySelectorAll(".option-btn");
+            buttons.forEach(btn => btn.style.pointerEvents = "none");
+
+            if (isCorrect) {
+                currentScore++;
+                feedbackElement.innerText = "Correct! Well done.";
+                feedbackElement.style.color = "#4CAF50"; 
+            } else {
+                feedbackElement.innerText = "Incorrect!";
+                feedbackElement.style.color = "#f44336"; 
+            }
+
+            // Check if all 4 questions are completed
+            if (answeredQuestions.length === 4) {
+                setTimeout(showFinalResults, 1500); // Wait 1.5 seconds before showing results
+            }
+        }
+
+        function showFinalResults() {
+            document.getElementById("question-text").innerText = "Quiz Complete!";
+            document.getElementById("options-container").innerHTML = "";
+            
+            const feedbackElement = document.getElementById("feedback");
+            feedbackElement.innerText = `Final Score: ${currentScore} / 4`;
+            feedbackElement.style.color = "#ffd700";
+            feedbackElement.style.fontSize = "24px";
+        }
+
+        // Load the first question on startup
+        window.onload = () => loadQuestion('cena1');
+    </script>
+</body>
+</html>

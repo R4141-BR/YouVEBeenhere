@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Trivia Selection</title>
+    <style>
+        body {
+            background-image: url('fundo2.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            min-height: 100vh;
+            color: #ffffff;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 40px;
+            width: 300px;
+        }
+        .map-btn {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border: 2px solid #ffd700;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .map-btn:hover {
+            background-color: #ffd700;
+            color: #000;
+        }
+        .home-link {
+            margin-top: 40px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        .home-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Choose Your Trivia Map</h1>
+    
+    <div class="menu-container">
+        <a href="trivia_2fort.html" class="map-btn">2Fort</a>
+        <a href="trivia_construct.html" class="map-btn">Gm_Construct</a>
+        <a href="trivia_badlands.html" class="map-btn">Badlands</a>
+        <a href="trivia_borneo.html" class="map-btn">Borneo</a>
+    </div>
+
+    <a href="chooseyourpath.html" class="home-link">Return to Path Selection</a>
+</body>
+</html>
